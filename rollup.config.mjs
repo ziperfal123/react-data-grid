@@ -1,25 +1,21 @@
-import { isAbsolute } from 'path';
 import { babel } from '@rollup/plugin-babel';
+import commonjs from '@rollup/plugin-commonjs';
 import nodeResolve from '@rollup/plugin-node-resolve';
+import replace from '@rollup/plugin-replace';
 
-const extensions = ['.ts', '.tsx'];
+const extensions = ['.ts', '.tsx', '.js'];
 
 export default {
-  input: './src/index.ts',
+  input: './index.tsx',
   output: [{
-    file: './lib/bundle.mjs',
+    file: './index.bundle.js',
     format: 'es',
     preferConst: true,
     sourcemap: true
-  }, {
-    file: './lib/bundle.cjs',
-    format: 'cjs',
-    preferConst: true,
-    sourcemap: true,
-    interop: false
   }],
-  external: id => !id.startsWith('.') && !isAbsolute(id),
   plugins: [
+    replace({ 'process.env.NODE_ENV': JSON.stringify('production') }),
+    commonjs(),
     babel({
       babelHelpers: 'runtime',
       extensions,
@@ -28,6 +24,6 @@ export default {
       // https://babeljs.io/docs/en/options#shouldprintcomment
       shouldPrintComment: comment => /^[@#]__.+__$/.test(comment)
     }),
-    nodeResolve({ extensions })
+    nodeResolve({ extensions, browser: true })
   ]
 };

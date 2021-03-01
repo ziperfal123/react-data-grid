@@ -6,6 +6,7 @@ export interface DataGridHandle {
     scrollToColumn: (colIdx: number) => void;
     scrollToRow: (rowIdx: number) => void;
     selectCell: (position: Position, openEditor?: boolean) => void;
+    deselectCell: () => void;
 }
 declare type SharedDivProps = Pick<React.HTMLAttributes<HTMLDivElement>, 'aria-label' | 'aria-labelledby' | 'aria-describedby' | 'className' | 'style'>;
 export interface DataGridProps<R, SR = unknown> extends SharedDivProps {

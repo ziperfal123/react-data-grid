@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { groupBy as rowGrouper } from 'lodash';
-import Select, { components, ValueType, OptionsType, Props as SelectProps } from 'react-select';
+import Select, { components, OptionsType } from 'react-select';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import faker from 'faker';
 
@@ -108,7 +108,7 @@ const SortableMultiValue = SortableElement((props: any) => {
   return <components.MultiValue {...props} innerProps={innerProps} />;
 });
 
-const SortableSelect = SortableContainer<SelectProps<Option>>(Select);
+const SortableSelect = SortableContainer<any>(Select);
 
 const options: OptionsType<Option> = [
   { value: 'country', label: 'Country' },
@@ -120,7 +120,7 @@ const options: OptionsType<Option> = [
 export function Grouping() {
   const [rows] = useState(createRows);
   const [selectedRows, setSelectedRows] = useState(() => new Set<React.Key>());
-  const [selectedOptions, setSelectedOptions] = useState<ValueType<Option>>([options[0], options[1]]);
+  const [selectedOptions, setSelectedOptions] = useState<any>([options[0], options[1]]);
   const [expandedGroupIds, setExpandedGroupIds] = useState(() => new Set<unknown>(['United States of America', 'United States of America__2015']));
 
   const groupBy = useMemo(() => Array.isArray(selectedOptions) ? selectedOptions.map((o: Option) => o.value) : undefined, [selectedOptions]);
@@ -142,11 +142,11 @@ export function Grouping() {
           axis="xy"
           onSortEnd={onSortEnd}
           distance={4}
-          getHelperDimensions={({ node }) => node.getBoundingClientRect()}
+          getHelperDimensions={({ node }: any) => node.getBoundingClientRect()}
           // react-select props
-          isMulti
+          // isMulti
           value={selectedOptions}
-          onChange={options => {
+          onChange={(options: any) => {
             setSelectedOptions(options);
             setExpandedGroupIds(new Set());
           }}

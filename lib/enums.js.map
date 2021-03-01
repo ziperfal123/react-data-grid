@@ -1,0 +1,1 @@
+{"version":3,"file":"enums.js","sourceRoot":"","sources":["../src/enums.ts"],"names":[],"mappings":"","sourcesContent":["export type CellNavigationMode = 'NONE' | 'CHANGE_ROW' | 'LOOP_OVER_ROW';\nexport type SortDirection = 'ASC' | 'DESC' | 'NONE';\n"]}

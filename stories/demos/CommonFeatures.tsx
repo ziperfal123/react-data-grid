@@ -1,6 +1,6 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, {useState, useCallback, useMemo, useRef} from 'react';
 import faker from 'faker';
-import DataGrid, { SelectColumn, Column, SortDirection, TextEditor } from '../../src';
+import DataGrid, { SelectColumn, Column, SortDirection, TextEditor, DataGridHandle } from '../../src';
 import { SelectEditor } from './components/Editors/SelectEditor';
 
 const dateFormatter = new Intl.DateTimeFormat(navigator.language);
@@ -204,7 +204,7 @@ export function CommonFeatures() {
   const [rows, setRows] = useState(createRows);
   const [[sortColumn, sortDirection], setSort] = useState<[string, SortDirection]>(['id', 'NONE']);
   const [selectedRows, setSelectedRows] = useState(() => new Set<React.Key>());
-
+  const gridRef = useRef<DataGridHandle>(null)
   const countries = useMemo(() => {
     return [...new Set(rows.map(r => r.country))].sort();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -255,6 +255,7 @@ export function CommonFeatures() {
 
   return (
     <DataGrid
+      ref={gridRef}
       rowKeyGetter={rowKeyGetter}
       columns={columns}
       rows={sortedRows}

@@ -56,6 +56,7 @@ export interface DataGridProps<R, SR = unknown> extends SharedDivProps {
     onExpandedGroupIdsChange?: (expandedGroupIds: Set<unknown>) => void;
     onFill?: (event: FillEvent<R>) => R[];
     onPaste?: (event: PasteEvent<R>) => R;
+    onClick?: (e: any) => void;
     /**
      * Custom renderers
      */

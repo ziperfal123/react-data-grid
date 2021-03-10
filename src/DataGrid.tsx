@@ -125,7 +125,7 @@ export interface DataGridProps<R, SR = unknown> extends SharedDivProps {
   onExpandedGroupIdsChange?: (expandedGroupIds: Set<unknown>) => void;
   onFill?: (event: FillEvent<R>) => R[];
   onPaste?: (event: PasteEvent<R>) => R;
-
+  onClick?: (e: any) => void
   /**
    * Custom renderers
    */
@@ -183,6 +183,7 @@ function DataGrid<R, SR>({
   sortColumn,
   sortDirection,
   onSort,
+  onClick = (e: MouseEvent) => {},
   filters,
   onFiltersChange,
   defaultColumnOptions,
@@ -891,6 +892,7 @@ function DataGrid<R, SR>({
       aria-multiselectable={isSelectable ? true : undefined}
       aria-colcount={columns.length}
       aria-rowcount={headerRowsCount + rowsCount + summaryRowsCount}
+      onClick={onClick}
       className={clsx('rdg', { 'rdg-viewport-dragging': isDragging }, className)}
       style={{
         ...style,
